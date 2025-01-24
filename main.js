@@ -21,6 +21,7 @@ const tsg_database = mysql.createConnection({
 
 const NOTES_TABLE = 'brandons_notes';
 const SYSTEMS_TABLE = 'system_logs'
+const FORUM_TABLE = 'forum';
 
 // Connect to TSG Database
 tsg_database.connect((err) =>
@@ -32,6 +33,40 @@ tsg_database.connect((err) =>
     }
     console.log('Connected to TSG Database');
 });
+
+// Forum
+
+app.get('/fetchForumTopic', (req, res) =>
+{
+    const query = `SELECT * FROM ${ FORUM_TABLE }`;
+    tsg_database.query(query, (err, results) =>
+    {
+        if (err)
+        {
+            return res.status(500).send(err);
+        }
+        res.json(results);
+    });
+});
+
+app.post('/addForumTopic', (req, res) =>
+{
+    const { title, description } = req.body;
+    if (!title || !description)
+    {
+        return res.status(400).send({ message: 'Forum addition is formatted incorrectly.' });
+    }
+    const query = `INSERT INTO ${ FORUM_TABLE } (title, description) VALUES (?, ?)`;
+    tsg_database.query(query, [title, description], (err, results) =>
+    {
+        if (err)
+        {
+            return res.status(500).send(err);
+        }
+        res.status(201).send({ id: results.insertId, title, description });
+    });
+});
+
 
 
 // Routes
