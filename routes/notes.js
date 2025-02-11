@@ -41,13 +41,13 @@ router.get('/:id', (req, res) =>
 // Create a new note
 router.post('/', (req, res) =>
 {
-    const { title, date, note } = req.body;
-    if (!title || !date || !note)
+    const { title, category, date, note } = req.body;
+    if (!title || !date || !note || !category)
     {
-        return res.status(400).send({ message: 'Title, date, and note are required' });
+        return res.status(400).send({ message: 'Title, category date, and note are required' });
     }
-    const query = `INSERT INTO ${ NOTES_TABLE } (title, date, note) VALUES (?, ?, ?)`;
-    pool.query(query, [title, date, note], (err, results) =>
+    const query = `INSERT INTO ${ NOTES_TABLE } (title, category, date, note) VALUES (?, ?, ?, ?)`;
+    pool.query(query, [title, category, date, note], (err, results) =>
     {
         if (err)
         {
@@ -61,9 +61,9 @@ router.post('/', (req, res) =>
 // Update a note by ID
 router.put('/:id', (req, res) =>
 {
-    const { title, date, note } = req.body;
-    const query = `UPDATE ${ NOTES_TABLE } SET title = ?, date = ?, note = ? WHERE id = ?`;
-    pool.query(query, [title, date, note, req.params.id], (err, results) =>
+    const { title, category, date, note } = req.body;
+    const query = `UPDATE ${ NOTES_TABLE } SET title = ?, category = ?, date = ?, note = ? WHERE id = ?`;
+    pool.query(query, [title, category, date, note, req.params.id], (err, results) =>
     {
         if (err)
         {
