@@ -3,7 +3,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 // Import routes
-const notesRoutes = require('./routes/notes');
+const brandonsNotesRoutes = require('./routes/brandons_notes');
+const bobbysNotesRoutes = require('./routes/bobbys_notes');
 const forumRoutes = require('./routes/forum');
 const systemLogsRoutes = require('./routes/system-logs');
 
@@ -16,7 +17,8 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Route middleware
-app.use('/notes', notesRoutes);
+app.use('/brandons_notes', brandonsNotesRoutes);
+app.use('/bobbys_notes', bobbysNotesRoutes);
 app.use('/forum', forumRoutes);
 app.use('/system-logs', systemLogsRoutes);
 
