@@ -6,6 +6,8 @@ const cors = require('cors');
 const notesRoutes = require('./routes/notes');
 const forumRoutes = require('./routes/forum');
 const systemLogsRoutes = require('./routes/system-logs');
+const brandonsNotesRoutes = require('./routes/brandons_notes');
+const bobbysNotesRoutes = require('./routes/bobbys_notes');
 
 // Create the Express app
 const app = express();
@@ -17,6 +19,8 @@ app.use(bodyParser.json());
 
 // Route middleware
 app.use('/notes', notesRoutes);
+app.use('/brandons_notes', brandonsNotesRoutes);
+app.use('/bobbys_notes', bobbysNotesRoutes);
 app.use('/forum', forumRoutes);
 app.use('/system-logs', systemLogsRoutes);
 
