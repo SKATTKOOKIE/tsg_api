@@ -2,8 +2,8 @@ const mysql = require('mysql');
 
 const pool = mysql.createPool({
     host: 'localhost',
-    user: 'hintonb',
-    password: 'Seaeye01',
+    user: 'root',
+    password: '',
     database: 'tsg_db_v2',
     connectionLimit: 10,
     waitForConnections: true,
