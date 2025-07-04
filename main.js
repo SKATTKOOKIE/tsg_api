@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 
 // Import routes
 const notesRoutes = require('./routes/notes');
@@ -10,6 +11,7 @@ const brandonsNotesRoutes = require('./routes/brandons_notes');
 const bobbysNotesRoutes = require('./routes/bobbys_notes');
 const authRoutes = require('./routes/auth'); // New auth routes
 const wikiRoutes = require('./routes/wiki'); // Updated wiki routes
+const imageRoutes = require('./routes/images'); // New image routes
 
 // Create the Express app
 const app = express();
@@ -28,8 +30,12 @@ app.use(cors({
 }));
 app.use(bodyParser.json());
 
+// Serve static files for uploaded images
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // Route middleware
 app.use('/auth', authRoutes); // Authentication routes
+app.use('/images', imageRoutes); // Image upload routes
 app.use('/notes', notesRoutes);
 app.use('/brandons_notes', brandonsNotesRoutes);
 app.use('/bobbys_notes', bobbysNotesRoutes);
@@ -55,6 +61,10 @@ app.listen(port, () =>
     console.log('- POST /auth/register - Register new user');
     console.log('- POST /auth/login - Login user');
     console.log('- GET /auth/me - Get current user info');
+    console.log('- POST /images/upload - Upload single image');
+    console.log('- POST /images/upload-multiple - Upload multiple images');
+    console.log('- GET /images/:filename - Get image file');
+    console.log('- DELETE /images/:filename - Delete image');
     console.log('- GET /wiki - Get all wiki pages (authenticated)');
     console.log('- POST /wiki - Create wiki page (authenticated)');
     console.log('- PUT /wiki/:id - Edit wiki page (admin or creator)');

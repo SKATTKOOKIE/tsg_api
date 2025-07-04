@@ -74,10 +74,10 @@ router.post('/login', (req, res) =>
 {
     const { username, password } = req.body;
 
-    console.log('🔍 LOGIN ATTEMPT:');
-    console.log('Received username:', username);
-    console.log('Received password:', password);
-    console.log('Request body:', req.body);
+    // console.log('🔍 LOGIN ATTEMPT:');
+    // console.log('Received username:', username);
+    // console.log('Received password:', password);
+    // console.log('Request body:', req.body);
 
     if (!username || !password)
     {
@@ -88,8 +88,8 @@ router.post('/login', (req, res) =>
     }
 
     const query = 'SELECT * FROM users WHERE username = ? OR email = ?';
-    console.log('🔍 Running query:', query);
-    console.log('Query params:', [username, username]);
+    // console.log('🔍 Running query:', query);
+    // console.log('Query params:', [username, username]);
 
     pool.query(query, [username, username], async (err, results) =>
     {
@@ -99,19 +99,19 @@ router.post('/login', (req, res) =>
             return res.status(500).json({ message: 'Database error' });
         }
 
-        console.log('📊 Database query results:');
-        console.log('Number of results:', results.length);
-        if (results.length > 0)
-        {
-            console.log('Found user:', {
-                id: results[0].id,
-                username: results[0].username,
-                email: results[0].email,
-                role: results[0].role,
-                hasPassword: !!results[0].password,
-                passwordLength: results[0].password ? results[0].password.length : 0
-            });
-        }
+        // console.log('📊 Database query results:');
+        // console.log('Number of results:', results.length);
+        // if (results.length > 0)
+        // {
+        //     console.log('Found user:', {
+        //         id: results[0].id,
+        //         username: results[0].username,
+        //         email: results[0].email,
+        //         role: results[0].role,
+        //         hasPassword: !!results[0].password,
+        //         passwordLength: results[0].password ? results[0].password.length : 0
+        //     });
+        // }
 
         if (results.length === 0)
         {
@@ -123,13 +123,13 @@ router.post('/login', (req, res) =>
 
         try
         {
-            console.log('🔐 Checking password...');
-            console.log('Plain password:', password);
-            console.log('Stored hash:', user.password);
+            // console.log('🔐 Checking password...');
+            // console.log('Plain password:', password);
+            // console.log('Stored hash:', user.password);
 
             // Check password
             const passwordMatch = await bcrypt.compare(password, user.password);
-            console.log('Password match result:', passwordMatch);
+            // console.log('Password match result:', passwordMatch);
 
             if (!passwordMatch)
             {
